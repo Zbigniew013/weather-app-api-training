@@ -11,7 +11,9 @@ const WeatherBox = (props) => {
   const handleCityChange = useCallback((city) => {
     setPending(true);
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=3a46d76c45d8cf4ee0ffb61855326212&units=metric`)
-      .then(response => response.json())
+      .then(response => {
+        if(response.status === 200) {
+        response.json()
       .then(data => {
         setWeather ({
           city: data.name,
@@ -21,6 +23,10 @@ const WeatherBox = (props) => {
         });
         setPending(false);
       });
+      } else {
+        alert('ERROR!')
+      }
+    });
         console.log(city);
   }, [] );
 
